@@ -31,8 +31,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1627287417338314809}
+  m_Children: []
   m_Father: {fileID: 1627287416778225745}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 2.18, z: 0}
@@ -271,37 +270,6 @@ Transform:
   m_Father: {fileID: 1627287418066361177}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1627287417338314806
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1627287417338314809}
-  m_Layer: 0
-  m_Name: LookTarget
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1627287417338314809
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1627287417338314806}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1627287416199229917}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1627287418066361173
 GameObject:
   m_ObjectHideFlags: 0
@@ -312,8 +280,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1627287418066361177}
   - component: {fileID: 1627287418066361174}
-  - component: {fileID: 1627287418066361178}
   - component: {fileID: 1627287418066361183}
+  - component: {fileID: 7487225976677170612}
   - component: {fileID: 1627287418066361180}
   - component: {fileID: 1627287418066361181}
   - component: {fileID: 1627287418066361182}
@@ -349,32 +317,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1627287418066361173}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1627287418066361178
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1627287418066361173}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a8509a7b92c68b42bb8f2608c4d82d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tankPressure: 0
-  tankVolume: 0
-  suitPressure: 0
-  suitVolume: 0
-  waterPressure: 0
-  playerDepth: 0
-  health: 0
-  heartRate: 0
-  breathingRate: 0
-  deadAir: 0
-  intakeRate: 0
-  outputRate: 0
-  suitArmor: 0
-  surface: {fileID: 0}
 --- !u!114 &1627287418066361183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -398,6 +340,19 @@ MonoBehaviour:
   look: {x: 0, y: 0}
   grounded: 0
   gravity: -4
+--- !u!114 &7487225976677170612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1627287418066361173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31db7e5750a1d2f47be980e72031c09e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
 --- !u!54 &1627287418066361180
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -542,6 +497,18 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 9e6304de-1b81-4df3-afae-d6b8b22e7cae
     m_ActionName: Player/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a016978c-45c3-4765-ba89-455f9046a953
+    m_ActionName: Player/Shoot[/Mouse/leftButton,/XInputControllerWindows/rightTrigger]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c368504d-a693-484f-b2f6-19428a0545bf
+    m_ActionName: Player/Siphon[/Mouse/rightButton,/XInputControllerWindows/leftTrigger]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: aaf7ee36-431c-4fe4-8e2f-dc7feabc8174
+    m_ActionName: Player/Eject[/Keyboard/q,/XInputControllerWindows/leftShoulder]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     public Rigidbody rb;
     public GameObject playerHead;
     public GameObject groundCheck;
+    public Animator gunAnimator;
     public float moveSpeed, lookSensitivity, maxForce, jumpForce;
     private float verticalVelocity;
     public Vector2 velocity, look;
@@ -19,6 +20,10 @@ public class PlayerController : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         velocity = context.ReadValue<Vector2>();
+        if (velocity.magnitude == 0)
+            gunAnimator.SetBool("Moving", false);
+        else
+            gunAnimator.SetBool("Moving", true);
     }
 
     public void OnLook(InputAction.CallbackContext context)
