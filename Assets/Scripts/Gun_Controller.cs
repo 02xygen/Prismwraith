@@ -8,15 +8,18 @@ public class Gun_Controller : MonoBehaviour
     public Animator gunAnim;
     public void OnShoot(InputAction.CallbackContext context)
     {
-  
+        if (context.performed)
+            gunAnim.SetTrigger("Shoot");
     }
     public void OnSiphon(InputAction.CallbackContext context)
     {
-
+        if (context.performed)
+            gunAnim.SetTrigger("Siphon");
     }
     public void OnEject(InputAction.CallbackContext context)
     {
-    
+        if (context.performed)
+            gunAnim.SetTrigger("Eject");
     }
 
 }
