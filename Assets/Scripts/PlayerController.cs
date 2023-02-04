@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        Debug.Log("Jump");
+        //Debug.Log("Jump");
         Jump();
     }
 

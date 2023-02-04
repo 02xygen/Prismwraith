@@ -195,6 +195,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas_Crystal (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fa7d1df80850d704ab7d786e3e9e3a3a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa7d1df80850d704ab7d786e3e9e3a3a, type: 3}
 --- !u!1 &121852012 stripped
@@ -283,6 +288,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Canvas_Crystal (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fa7d1df80850d704ab7d786e3e9e3a3a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa7d1df80850d704ab7d786e3e9e3a3a, type: 3}
@@ -586,6 +596,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas_Crystal (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fa7d1df80850d704ab7d786e3e9e3a3a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa7d1df80850d704ab7d786e3e9e3a3a, type: 3}
 --- !u!1 &488811348 stripped
@@ -675,6 +690,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas_Crystal (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fa7d1df80850d704ab7d786e3e9e3a3a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa7d1df80850d704ab7d786e3e9e3a3a, type: 3}
 --- !u!1 &652054662 stripped
@@ -716,6 +736,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunAnim: {fileID: 1170931504}
+  coreRenderer: {fileID: 1170931506}
+  coreLight: {fileID: 1393268982}
+  storedColor: {r: 0, g: 0, b: 0, a: 0}
+  canvasLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!1 &669577984
 GameObject:
   m_ObjectHideFlags: 0
@@ -1528,6 +1554,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1170931501}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &1170931506 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -3700930719259480192, guid: 558cf7fbf9909ee448287abe03299f52,
+    type: 3}
+  m_PrefabInstance: {fileID: 1170931501}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1181548763
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1599,6 +1631,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Canvas_Crystal (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fa7d1df80850d704ab7d786e3e9e3a3a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa7d1df80850d704ab7d786e3e9e3a3a, type: 3}
@@ -1694,6 +1731,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas_Crystal
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fa7d1df80850d704ab7d786e3e9e3a3a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa7d1df80850d704ab7d786e3e9e3a3a, type: 3}
 --- !u!1 &1318929271 stripped
@@ -1728,7 +1770,7 @@ GameObject:
   - component: {fileID: 1393268982}
   - component: {fileID: 1393268981}
   m_Layer: 0
-  m_Name: Point Light
+  m_Name: Core_Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1781,8 +1823,8 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
-  m_Range: 0.29
+  m_Intensity: 0.25
+  m_Range: 1
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -2021,6 +2063,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1627287416199229857, guid: 434562c4b0dc9714abc66dac95d8fded,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1627287416199229857, guid: 434562c4b0dc9714abc66dac95d8fded,
+        type: 3}
+      propertyPath: m_ShowToolkit
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1627287416199229857, guid: 434562c4b0dc9714abc66dac95d8fded,
+        type: 3}
+      propertyPath: m_ShowCustomSorter
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1627287417338314809, guid: 434562c4b0dc9714abc66dac95d8fded,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2229,4 +2286,5 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 1627287418066361178, guid: 434562c4b0dc9714abc66dac95d8fded, type: 3}
     - {fileID: 7487225976677170612, guid: 434562c4b0dc9714abc66dac95d8fded, type: 3}
+    - {fileID: 1627287416199229857, guid: 434562c4b0dc9714abc66dac95d8fded, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 434562c4b0dc9714abc66dac95d8fded, type: 3}
