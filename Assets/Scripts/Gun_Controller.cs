@@ -8,9 +8,13 @@ public class Gun_Controller : MonoBehaviour
     public Animator gunAnim;
     public Renderer coreRenderer;
     public Light coreLight;
-    public Color storedColor;
+    public Color storedColor = Color.white;
+    public Material storedMat;
+    private Color brown = new Color(123, 64, 0, 255);
+    private Color orange = new Color(255, 133, 0, 255);
     public LayerMask canvasLayer;
-    
+    public Material[] colors;
+  
     public void OnShoot(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -44,9 +48,10 @@ public class Gun_Controller : MonoBehaviour
         Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hitinfo, 100, canvasLayer);
         if (hitinfo.collider != null)
         {
-            Debug.Log("SHOT");
-            int newColorNumber = ColorComparer(storedColor, hitinfo.collider.gameObject.GetComponent<Renderer>().material.color);
-            hitinfo.collider.gameObject.GetComponent<Renderer>().material.color = ColorUnNumberer(newColorNumber);
+            Material targetMat = hitinfo.collider.gameObject.GetComponent<Renderer>().material;
+            int mixedColor = ColorComparer(Colorindexer(storedMat), Colorindexer(targetMat));
+            if (mixedColor != 0)
+                hitinfo.collider.gameObject.GetComponent<Renderer>().material = colors[mixedColor];
         }
     }
 
@@ -55,97 +60,81 @@ public class Gun_Controller : MonoBehaviour
         Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hitinfo, 100, canvasLayer);
         if (hitinfo.collider != null)
         {
-            storedColor = hitinfo.collider.gameObject.GetComponent<Renderer>().material.color;
-            coreRenderer.material.color = storedColor;
-            coreRenderer.material.SetColor("_EmissionColor", storedColor * 50f);
-            coreLight.color = storedColor;
+            if (hitinfo.collider.gameObject.GetComponent<Renderer>().material != colors[1])
+            {
+                storedColor = hitinfo.collider.gameObject.GetComponent<Renderer>().material.color;
+                storedMat = hitinfo.collider.gameObject.GetComponent<Renderer>().material;
+                coreRenderer.material.SetColor("_Color", storedColor);
+                coreRenderer.material.SetColor("_EmissionColor", storedColor * 25);
+                coreLight.color = storedColor;
+                Debug.Log(Colorindexer(storedMat));
+            }
         }
     }
 
     void Eject()
     {
         coreRenderer.material.SetColor("_Color", Color.white);
-        coreRenderer.material.SetColor("_EmissionColor", Color.white * 25f);
-        storedColor = Color.white;
+        coreRenderer.material.SetColor("_EmissionColor", Color.white);
         coreLight.color = Color.white;
+        storedMat = colors[1];
+
     }
 
-    int ColorNumberer(Color color)
+    public int Colorindexer(Material mat)
     {
-        if (color == Color.white)
-            return 1;
-        else if (color == Color.red)
-            return 2;
-        else if (color == Color.blue)
-            return 3;
-        else if (color == Color.yellow)
-            return 4;
-        else if (color == Color.magenta)
-            return 5;
-        else if (color == new Color(255, 238, 0, 255))
-            return 6;
-        else if (color == Color.green)
-            return 7;
-        else
-            return 9;
-    }
-
-    Color ColorUnNumberer(int num)
-    {
-        if (num == 1)
-            return Color.white;
-        else if (num == 2)
-            return Color.red;
-        else if (num == 3)
-            return Color.blue;
-        else if (num == 4)
-            return Color.yellow;
-        else if (num == 5)
-            return Color.magenta;
-        else if (num == 6)
-            return new Color(255, 238, 0, 255);
-        else if (num == 7)
-            return Color.green;
-        else
-            return new Color(133, 78, 0, 255);
-    }
-
-    int ColorComparer(Color storedColor, Color baseColor)
-    {
-        int baseColorNumber = ColorNumberer(baseColor);
-        int storedColorNumber = ColorNumberer(storedColor);
-
-        switch (baseColorNumber)
+        for (int i = 1; i < colors.Length; i++)
         {
-            case 1:
-                return storedColorNumber; 
-            case 2:
-                if (storedColorNumber != 5 || storedColorNumber != 6)
-                    return storedColorNumber + baseColorNumber;
-                break;
-            case 3:
-                if (storedColorNumber != 5 || storedColorNumber != 7)
-                    return storedColorNumber + baseColorNumber;
-                break;
-            case 4:
-                if (storedColorNumber != 6 || storedColorNumber != 7)
-                    return storedColorNumber + baseColorNumber;
-                break;
-            case 5:
-                if (storedColorNumber != 2 || storedColorNumber != 3)
-                    return storedColorNumber + baseColorNumber;
-                break;
-            case 6:
-                if (storedColorNumber != 2 || storedColorNumber != 4)
-                    return storedColorNumber + baseColorNumber;
-                break;
-            case 7:
-                if (storedColorNumber != 3 || storedColorNumber != 4)
-                    return storedColorNumber + baseColorNumber;
-                break;
-     
+            if (mat.color == colors[i].color)
+                return i;
         }
         return 0;
+    }
 
+    public int ColorComparer(int color1, int color2)
+    {
+        switch (color1)
+        {
+            case 1:
+                return color1;
+            case 2:
+                if (color2 == 1)
+                    return color1;
+                if (color2 != 5 && color2 != 6)
+                    return color1 + color2;
+                break;
+            case 3:
+                if (color2 == 1)
+                    return color1;
+                if (color2 != 5 && color2 != 7)
+                    return color1 + color2;
+                break;
+            case 4:
+                if (color2 == 1)
+                    return color1;
+                if (color2 != 6 && color2 != 7)
+                    return color1 + color2;
+                break;
+            case 5:
+                if (color2 == 1)
+                    return color1;
+                if (color2 != 2 && color2 != 3)
+                    return color1 + color2;
+                break;
+            case 6:
+                if (color2 == 1)
+                    return color1;
+                if (color2 != 2 && color2 != 4)
+                    return color1 + color2;
+                break;
+            case 7:
+                if (color2 == 1)
+                    return color1;
+                if (color2 != 3 && color2 != 4)
+                    return color1 + color2;
+                break;
+
+        }
+        return 0;
     }
 }
