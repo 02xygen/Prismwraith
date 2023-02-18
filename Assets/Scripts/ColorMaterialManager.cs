@@ -9,7 +9,7 @@ public class ColorMaterialManager : MonoBehaviour
     {
         for (int i = 1; i < colors.Length; i++)
         {
-            if (mat.color == colors[i].color)
+            if (mat.GetColor("_OldColor") == colors[i].GetColor("_OldColor"))
                 return i;
         }
         return 0;

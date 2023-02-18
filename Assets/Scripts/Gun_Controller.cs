@@ -60,7 +60,7 @@ public class Gun_Controller : MonoBehaviour
         {
             if (hitinfo.collider.gameObject.GetComponent<Renderer>().material != colorManager.GetComponent<ColorMaterialManager>().colors[1])
             {
-                storedColor = hitinfo.collider.gameObject.GetComponent<Renderer>().material.color;
+                storedColor = hitinfo.collider.gameObject.GetComponent<Renderer>().material.GetColor("_OldColor");
                 storedMat = hitinfo.collider.gameObject.GetComponent<Renderer>().material;
                 coreRenderer.material.SetColor("_Color", storedColor);
                 coreRenderer.material.SetColor("_EmissionColor", storedColor * 25);
