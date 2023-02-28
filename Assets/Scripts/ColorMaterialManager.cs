@@ -24,37 +24,37 @@ public class ColorMaterialManager : MonoBehaviour
             case 2:
                 if (color2 == 1)
                     return color1;
-                if (color2 != 5 && color2 != 6)
+                if (color2 != 5 && color2 != 6 && color2 != color1)
                     return color1 + color2;
                 break;
             case 3:
                 if (color2 == 1)
                     return color1;
-                if (color2 != 5 && color2 != 7)
+                if (color2 != 5 && color2 != 7 && color2 != color1)
                     return color1 + color2;
                 break;
             case 4:
                 if (color2 == 1)
                     return color1;
-                if (color2 != 6 && color2 != 7)
+                if (color2 != 6 && color2 != 7 && color2 != color1)
                     return color1 + color2;
                 break;
             case 5:
                 if (color2 == 1)
                     return color1;
-                if (color2 != 2 && color2 != 3 && color2 != 6 && color2 != 7)
+                if (color2 != 2 && color2 != 3 && color2 != 6 && color2 != 7 && color2 != color1)
                     return color1 + color2;
                 break;
             case 6:
                 if (color2 == 1)
                     return color1;
-                if (color2 != 2 && color2 != 4 && color2 != 5 && color2 != 7)
+                if (color2 != 2 && color2 != 4 && color2 != 5 && color2 != 7 && color2 != color1)
                     return color1 + color2;
                 break;
             case 7:
                 if (color2 == 1)
                     return color1;
-                if (color2 != 3 && color2 != 4 && color2 != 5 && color2 != 6)
+                if (color2 != 3 && color2 != 4 && color2 != 5 && color2 != 6 && color2 != color1)
                     return color1 + color2;
                 break;
 
