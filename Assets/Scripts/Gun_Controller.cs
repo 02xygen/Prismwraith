@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.VFX;
 
 public class Gun_Controller : MonoBehaviour
 {
@@ -9,13 +10,21 @@ public class Gun_Controller : MonoBehaviour
     public Transform gunTrans;
     public Renderer coreRenderer;
     public Light coreLight;
+    public VisualEffect suction;
+    public GameObject target;
     public GameObject laser;
     public ParticleSystem laserTrail;
     public Color storedColor = Color.white;
     public Material storedMat;
     public LayerMask canvasLayer;
     public GameObject colorManager;
-  
+
+
+    private void Start()
+    {
+        
+    }
+
     public void OnShoot(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -74,8 +83,11 @@ public class Gun_Controller : MonoBehaviour
         Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hitinfo, 100, canvasLayer);
         if (hitinfo.collider != null)
         {
+            target.transform.position = hitinfo.point;
             if (hitinfo.collider.gameObject.GetComponent<Renderer>().material != colorManager.GetComponent<ColorMaterialManager>().colors[1])
             {
+                suction.Play();
+                StartCoroutine(StopSuck());
                 storedColor = hitinfo.collider.gameObject.GetComponent<Renderer>().material.GetColor("_OldColor");
                 storedMat = hitinfo.collider.gameObject.GetComponent<Renderer>().material;
                 coreRenderer.material.SetColor("_Color", storedColor);
@@ -102,5 +114,11 @@ public class Gun_Controller : MonoBehaviour
         var laserMain = laserTrail.main;
         laserMain.startColor = Color.white;
 
+    }
+
+    IEnumerator StopSuck()
+    {
+        yield return new WaitForSecondsRealtime(0.5f);
+        suction.Stop();
     }
 }
