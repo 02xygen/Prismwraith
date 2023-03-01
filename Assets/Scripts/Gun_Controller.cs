@@ -81,14 +81,14 @@ public class Gun_Controller : MonoBehaviour
                 coreRenderer.material.SetColor("_Color", storedColor);
                 coreRenderer.material.SetColor("_EmissionColor", storedColor * 25);
                 coreLight.color = storedColor;
+                storedColor.a = 255;
             }
         }
-        /*
         var main = laser.GetComponent<ParticleSystem>().main;
         main.startColor = storedColor;
         var laserMain = laserTrail.main;
         laserMain.startColor = storedColor;
-        */
+        
     }
 
     void Eject()
@@ -97,10 +97,10 @@ public class Gun_Controller : MonoBehaviour
         coreRenderer.material.SetColor("_EmissionColor", Color.white);
         coreLight.color = Color.white;
         storedMat = colorManager.GetComponent<ColorMaterialManager>().colors[1];
-        /*var main = laser.GetComponent<ParticleSystem>().main;
+        var main = laser.GetComponent<ParticleSystem>().main;
         main.startColor = Color.white;
         var laserMain = laserTrail.main;
         laserMain.startColor = Color.white;
-        */
+
     }
 }
