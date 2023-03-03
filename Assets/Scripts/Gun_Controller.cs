@@ -8,16 +8,22 @@ public class Gun_Controller : MonoBehaviour
 {
     public Animator gunAnim;
     public Transform gunTrans;
-    public Renderer coreRenderer;
+    public GameObject core;
     public Light coreLight;
     public VisualEffect suction;
     public GameObject target;
     public GameObject laser;
     public ParticleSystem laserTrail;
+    public ParticleSystem ejectedParticles;
     public Color storedColor = Color.white;
     public Material storedMat;
     public LayerMask canvasLayer;
     public GameObject colorManager;
+    public float recoilTime = 1f;
+    public float suctionTime = 1f;
+    public float ejectTime = 1f;
+    private float lastActionTime;
+    private float lastEjectTime;
 
 
     private void Start()
@@ -29,8 +35,11 @@ public class Gun_Controller : MonoBehaviour
     {
         if (context.performed)
         {
+            if (Time.time - lastActionTime < recoilTime)
+                return;
             gunAnim.SetTrigger("Shoot");
             Shoot();
+            lastActionTime = Time.time;
         }
             
     }
@@ -38,8 +47,11 @@ public class Gun_Controller : MonoBehaviour
     {
         if (context.performed)
         {
+            if (Time.time - lastActionTime < recoilTime)
+                return;
             gunAnim.SetTrigger("Siphon");
             Siphon();
+            lastActionTime = Time.time;
         }
             
     }
@@ -47,8 +59,15 @@ public class Gun_Controller : MonoBehaviour
     {
         if (context.performed)
         {
-            gunAnim.SetTrigger("Eject");
-            Eject();
+            if (storedColor != Color.white)
+            {
+                if (Time.time - lastEjectTime < recoilTime)
+                    return;
+                gunAnim.SetTrigger("Eject");
+                Eject();
+                lastEjectTime = Time.time;
+            }
+            return;
         }
             
     }
@@ -65,7 +84,6 @@ public class Gun_Controller : MonoBehaviour
             int mixedColor = colorManager.GetComponent<ColorMaterialManager>().ColorComparer(colorManager.GetComponent<ColorMaterialManager>().Colorindexer(storedMat), colorManager.GetComponent<ColorMaterialManager>().Colorindexer(targetMat));
             if (mixedColor != 0)
             {
-               // = colorManager.GetComponent<ColorMaterialManager>().colors[mixedColor].GetColor("_NewColor");
                 hitinfo.collider.GetComponent<Paint>().ChangeColor(mixedColor);
             }
         }
@@ -84,36 +102,38 @@ public class Gun_Controller : MonoBehaviour
         if (hitinfo.collider != null)
         {
             target.transform.position = hitinfo.point;
-            if (hitinfo.collider.gameObject.GetComponent<Renderer>().material != colorManager.GetComponent<ColorMaterialManager>().colors[1])
+            if (hitinfo.collider.gameObject.GetComponent<Renderer>().material.GetColor("_OldColor") != colorManager.GetComponent<ColorMaterialManager>().colors[1].GetColor("_OldColor"))
             {
-                suction.Play();
-                StartCoroutine(StopSuck());
+                core.GetComponent<Core_Change>().ChangeCore(storedColor, hitinfo.collider.gameObject.GetComponent<Renderer>().material.GetColor("_OldColor"));
                 storedColor = hitinfo.collider.gameObject.GetComponent<Renderer>().material.GetColor("_OldColor");
                 storedMat = hitinfo.collider.gameObject.GetComponent<Renderer>().material;
-                coreRenderer.material.SetColor("_Color", storedColor);
-                coreRenderer.material.SetColor("_EmissionColor", storedColor * 25);
-                coreLight.color = storedColor;
                 storedColor.a = 255;
+                suction.SetVector4("Color", storedColor);
+                suction.Play();
+                StartCoroutine(StopSuck());
             }
         }
         var main = laser.GetComponent<ParticleSystem>().main;
         main.startColor = storedColor;
         var laserMain = laserTrail.main;
         laserMain.startColor = storedColor;
+        var ejectMain = ejectedParticles.main;
+        ejectMain.startColor = storedColor;
         
     }
 
     void Eject()
     {
-        coreRenderer.material.SetColor("_Color", Color.white);
-        coreRenderer.material.SetColor("_EmissionColor", Color.white);
+        ejectedParticles.Play();
+        core.GetComponent<Renderer>().material.SetColor("_OldColor", Color.white);
+        core.GetComponent<Renderer>().material.SetColor("_NewColor", Color.white);
+        storedColor = Color.white;
         coreLight.color = Color.white;
         storedMat = colorManager.GetComponent<ColorMaterialManager>().colors[1];
         var main = laser.GetComponent<ParticleSystem>().main;
         main.startColor = Color.white;
         var laserMain = laserTrail.main;
         laserMain.startColor = Color.white;
-
     }
 
     IEnumerator StopSuck()

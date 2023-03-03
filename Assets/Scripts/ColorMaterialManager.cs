@@ -20,7 +20,7 @@ public class ColorMaterialManager : MonoBehaviour
         switch (color1)
         {
             case 1:
-                return color1;
+                return 0;
             case 2:
                 if (color2 == 1)
                     return color1;
