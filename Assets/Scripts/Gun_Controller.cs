@@ -9,6 +9,12 @@ public class Gun_Controller : MonoBehaviour
     public Animator gunAnim;
     public Transform gunTrans;
     public GameObject core;
+    public AudioSource gunAudio;
+    public AudioSource targetAudio;
+    public AudioClip shootSound;
+    public AudioClip siphonSound;
+    public AudioClip ejectSound;
+    public AudioClip colorChangeSound;
     public Light coreLight;
     public VisualEffect suction;
     public GameObject target;
@@ -19,6 +25,7 @@ public class Gun_Controller : MonoBehaviour
     public Material storedMat;
     public LayerMask canvasLayer;
     public GameObject colorManager;
+    public GameObject pitchManager;
     public float recoilTime = 1f;
     public float suctionTime = 1f;
     public float ejectTime = 1f;
@@ -76,6 +83,7 @@ public class Gun_Controller : MonoBehaviour
     {
         Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hitinfo, 100, canvasLayer);
         Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hitpoint, 100);
+
         if (hitinfo.collider != null)
         {
             laser.transform.LookAt(hitpoint.point);
@@ -85,6 +93,12 @@ public class Gun_Controller : MonoBehaviour
             if (mixedColor != 0)
             {
                 hitinfo.collider.GetComponent<Paint>().ChangeColor(mixedColor);
+
+                target.transform.position = hitinfo.point;
+
+                targetAudio.clip = colorChangeSound;
+                targetAudio.pitch = pitchManager.GetComponent<PitchManager>().ColorPitch(mixedColor);
+                targetAudio.Play();
             }
         }
 
@@ -94,6 +108,11 @@ public class Gun_Controller : MonoBehaviour
             laser.transform.rotation = gunTrans.rotation;
         
         laser.GetComponent<ParticleSystem>().Play();
+
+        gunAudio.clip = shootSound;
+        gunAudio.pitch = pitchManager.GetComponent<PitchManager>().ColorPitch(colorManager.GetComponent<ColorMaterialManager>().Colorindexer(storedMat));
+        gunAudio.Play();
+
     }
 
     void Siphon()
@@ -108,9 +127,14 @@ public class Gun_Controller : MonoBehaviour
                 storedColor = hitinfo.collider.gameObject.GetComponent<Renderer>().material.GetColor("_OldColor");
                 storedMat = hitinfo.collider.gameObject.GetComponent<Renderer>().material;
                 storedColor.a = 255;
+
                 suction.SetVector4("Color", storedColor);
                 suction.Play();
                 StartCoroutine(StopSuck());
+
+                gunAudio.clip = siphonSound;
+                gunAudio.pitch = pitchManager.GetComponent<PitchManager>().ColorPitch(colorManager.GetComponent<ColorMaterialManager>().Colorindexer(storedMat));
+                gunAudio.Play();
             }
         }
         var main = laser.GetComponent<ParticleSystem>().main;
@@ -124,6 +148,10 @@ public class Gun_Controller : MonoBehaviour
 
     void Eject()
     {
+        gunAudio.clip = ejectSound;
+        gunAudio.pitch = pitchManager.GetComponent<PitchManager>().ColorPitch(colorManager.GetComponent<ColorMaterialManager>().Colorindexer(storedMat));
+        gunAudio.Play();
+
         ejectedParticles.Play();
         core.GetComponent<Renderer>().material.SetColor("_OldColor", Color.white);
         core.GetComponent<Renderer>().material.SetColor("_NewColor", Color.white);
