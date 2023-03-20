@@ -6,6 +6,7 @@ public class Core_Change : MonoBehaviour
 {
     private Material material;
     public Light coreLight;
+    public GameObject player;
     private float startValue = -2f;
     private float endValue = 0.3f;
     private float lerpSpeed = 1f;
@@ -40,6 +41,11 @@ public class Core_Change : MonoBehaviour
 
         while (timeElapsed < lerpDuration)
         {
+            if(player.GetComponent<Gun_Controller>().ejecting == true)
+            {
+                player.GetComponent<Gun_Controller>().ejecting = false;
+                yield return null;
+            }
             material.SetFloat("_CurrentTime", Mathf.Lerp(startValue, endValue, (timeElapsed / lerpDuration) * lerpSpeed));
             coreLight.color = Color.Lerp(oldColor, newColor, timeElapsed / lerpDuration);
             timeElapsed += Time.deltaTime;

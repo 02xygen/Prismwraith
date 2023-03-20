@@ -14,16 +14,20 @@ public class Gun_Controller : MonoBehaviour
     public AudioClip shootSound;
     public AudioClip siphonSound;
     public AudioClip ejectSound;
+    public bool ejecting = false;
     public AudioClip colorChangeSound;
     public Light coreLight;
     public VisualEffect suction;
     public GameObject target;
     public GameObject laser;
     public ParticleSystem laserTrail;
+    public ParticleSystem muzzleFlash;
+    public ParticleSystem muzzleFlash2;
     public ParticleSystem ejectedParticles;
     public Color storedColor = Color.white;
     public Material storedMat;
     public LayerMask canvasLayer;
+    public LayerMask buildLayer;
     public GameObject colorManager;
     public GameObject pitchManager;
     public float recoilTime = 1f;
@@ -70,6 +74,7 @@ public class Gun_Controller : MonoBehaviour
             {
                 if (Time.time - lastEjectTime < recoilTime)
                     return;
+                ejecting = true;
                 gunAnim.SetTrigger("Eject");
                 Eject();
                 lastEjectTime = Time.time;
@@ -82,6 +87,7 @@ public class Gun_Controller : MonoBehaviour
     void Shoot()
     {
         Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hitinfo, 100, canvasLayer);
+        Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit buildHitInfo, 100, buildLayer);
         Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hitpoint, 100);
 
         if (hitinfo.collider != null)
@@ -101,6 +107,14 @@ public class Gun_Controller : MonoBehaviour
                 targetAudio.Play();
             }
         }
+
+       if (buildHitInfo.collider != null)
+       {
+            Debug.Log("hit buildable");
+            buildHitInfo.collider.GetComponent<Buildable>().BuildOrCollapse(colorManager.GetComponent<ColorMaterialManager>().Colorindexer(storedMat));
+            target.transform.position = buildHitInfo.point;
+            targetAudio.clip = colorChangeSound;
+       }
 
         if (hitpoint.collider != null)
             laser.transform.LookAt(hitpoint.point);
@@ -143,6 +157,10 @@ public class Gun_Controller : MonoBehaviour
         laserMain.startColor = storedColor;
         var ejectMain = ejectedParticles.main;
         ejectMain.startColor = storedColor;
+        var muzzleMain = muzzleFlash.main;
+        muzzleMain.startColor = storedColor;
+        var muzzle2Main = muzzleFlash2.main;
+        muzzle2Main.startColor = storedColor;
         
     }
 
@@ -162,6 +180,10 @@ public class Gun_Controller : MonoBehaviour
         main.startColor = Color.white;
         var laserMain = laserTrail.main;
         laserMain.startColor = Color.white;
+        var muzzleMain = muzzleFlash.main;
+        muzzleMain.startColor = Color.white;
+        var muzzle2Main = muzzleFlash2.main;
+        muzzle2Main.startColor = Color.white;
     }
 
     IEnumerator StopSuck()

@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     public Rigidbody rb;
     public GameObject playerHead;
     public GameObject groundCheck;
+    public AudioSource footsteps;
     public Animator gunAnimator;
     public float moveSpeed, lookSensitivity, maxForce, jumpForce;
     private float verticalVelocity;
@@ -21,9 +22,15 @@ public class PlayerController : MonoBehaviour
     {
         velocity = context.ReadValue<Vector2>();
         if (velocity.magnitude == 0)
+        {
             gunAnimator.SetBool("Moving", false);
+            footsteps.enabled = false;
+        }
+
         else
+        {
             gunAnimator.SetBool("Moving", true);
+        }
     }
 
     public void OnLook(InputAction.CallbackContext context)
@@ -67,6 +74,15 @@ public class PlayerController : MonoBehaviour
         Vector3.ClampMagnitude(velocityChange, maxForce);
 
         rb.AddForce(velocityChange, ForceMode.VelocityChange);
+
+        if (grounded && velocity.magnitude != 0)
+        {
+            footsteps.enabled = true;
+
+        }
+
+        else
+            footsteps.enabled = false;
     }
 
     void Jump()
