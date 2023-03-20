@@ -27,7 +27,7 @@ public class Buildable : MonoBehaviour
         collision = GetComponent<MeshCollider>();
         materials[0].SetColor("_Color", baseMat.GetColor("_OldColor"));
         materials[1].SetColor("_Color", baseMat.GetColor("_OldColor"));
-        //collision.enabled = false;
+        gameObject.layer = LayerMask.NameToLayer("Collapsed");
 
     }
 
@@ -66,7 +66,8 @@ public class Buildable : MonoBehaviour
         }
         materials[0].SetFloat("_CurrentTime", endValue);
         isBuilt = true;
-        //collision.enabled = true;
+        gameObject.layer = LayerMask.NameToLayer("Buildable");
+
     }
 
     IEnumerator Collapse(int colorIndex)
@@ -80,7 +81,7 @@ public class Buildable : MonoBehaviour
             yield return null;
         }
         materials[0].SetFloat("_CurrentTime", startValue);
-        //collision.i = false;
+        gameObject.layer = LayerMask.NameToLayer("Collapsed");
         isBuildable = false;
         isBuilt = false;
         StartCoroutine(Cooldown());
@@ -97,5 +98,6 @@ public class Buildable : MonoBehaviour
             yield return null;
         }
         isBuildable = true;
+        
     }
 }

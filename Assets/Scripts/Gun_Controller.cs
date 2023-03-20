@@ -28,6 +28,7 @@ public class Gun_Controller : MonoBehaviour
     public Material storedMat;
     public LayerMask canvasLayer;
     public LayerMask buildLayer;
+    public LayerMask collapseLayer;
     public GameObject colorManager;
     public GameObject pitchManager;
     public float recoilTime = 1f;
@@ -88,6 +89,7 @@ public class Gun_Controller : MonoBehaviour
     {
         Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hitinfo, 100, canvasLayer);
         Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit buildHitInfo, 100, buildLayer);
+        Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit collapseHitInfo, 100, collapseLayer);
         Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hitpoint, 100);
 
         if (hitinfo.collider != null)
@@ -115,6 +117,15 @@ public class Gun_Controller : MonoBehaviour
             target.transform.position = buildHitInfo.point;
             targetAudio.clip = colorChangeSound;
        }
+
+
+        if (collapseHitInfo.collider != null)
+        {
+            Debug.Log("hit collapsed");
+            collapseHitInfo.collider.GetComponent<Buildable>().BuildOrCollapse(colorManager.GetComponent<ColorMaterialManager>().Colorindexer(storedMat));
+            target.transform.position = collapseHitInfo.point;
+            targetAudio.clip = colorChangeSound;
+        }
 
         if (hitpoint.collider != null)
             laser.transform.LookAt(hitpoint.point);

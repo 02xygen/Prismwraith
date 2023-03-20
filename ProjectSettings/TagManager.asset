@@ -9,14 +9,14 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Canvas
+  - Player
   - Water
   - UI
   - Viewmodel
   - Post-Processing
   - Buildable
-  - 
-  - 
+  - Collapsed
+  - Canvas
   - 
   - 
   - 

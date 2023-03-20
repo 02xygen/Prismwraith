@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1422967404}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GunHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 1627287416199229918}
   - component: {fileID: 1627287416199229919}
   - component: {fileID: 1627287416199229916}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1983
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 1627287416203085906}
   - component: {fileID: 1627287416203085909}
   - component: {fileID: 7672938602654553571}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -315,7 +315,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1627287416778225745}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CameraLocation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -354,7 +354,7 @@ GameObject:
   - component: {fileID: 1627287418066361181}
   - component: {fileID: 1627287418066361182}
   - component: {fileID: 659592687}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -642,7 +642,13 @@ MonoBehaviour:
   storedMat: {fileID: 2100000, guid: b71e18b3f71cb314ca3af9327f2bcba2, type: 2}
   canvasLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 1024
+  buildLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  collapseLayer:
+    serializedVersion: 2
+    m_Bits: 512
   colorManager: {fileID: 0}
   pitchManager: {fileID: 0}
   recoilTime: 1
@@ -660,7 +666,7 @@ GameObject:
   - component: {fileID: 5472308583495270486}
   - component: {fileID: 4390590611478223733}
   - component: {fileID: 5780500917980024980}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Viewmodel_Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
