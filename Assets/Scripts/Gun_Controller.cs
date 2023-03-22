@@ -13,6 +13,7 @@ public class Gun_Controller : MonoBehaviour
     public AudioSource targetAudio;
     public AudioClip shootSound;
     public AudioClip siphonSound;
+    public AudioClip siphonFail;
     public AudioClip ejectSound;
     public bool ejecting = false;
     public AudioClip colorChangeSound;
@@ -143,6 +144,7 @@ public class Gun_Controller : MonoBehaviour
     void Siphon()
     {
         Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hitinfo, 100, canvasLayer);
+
         if (hitinfo.collider != null)
         {
             target.transform.position = hitinfo.point;
@@ -161,6 +163,14 @@ public class Gun_Controller : MonoBehaviour
                 gunAudio.pitch = pitchManager.GetComponent<PitchManager>().ColorPitch(colorManager.GetComponent<ColorMaterialManager>().Colorindexer(storedMat));
                 gunAudio.Play();
             }
+            
+        }
+
+        else
+        {
+            gunAudio.clip = siphonFail;
+            gunAudio.pitch = 1;
+            gunAudio.Play();
         }
         var main = laser.GetComponent<ParticleSystem>().main;
         main.startColor = storedColor;
