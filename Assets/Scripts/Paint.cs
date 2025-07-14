@@ -6,6 +6,7 @@ public class Paint : MonoBehaviour
 {
     private Material material;
     public GameObject colorManager;
+    public bool isPaintable = true;
     private float startValue = -1f;
     private float endValue = 0.3f;
     private float lerpDuration = 0.5f;
@@ -21,7 +22,7 @@ public class Paint : MonoBehaviour
     public void ChangeColor(int colorIndex) // Change the objects color to the color matching the given index
     {
         material = GetComponent<MeshRenderer>().sharedMaterial;
-        if (colorIndex != 0) // Check if input is legal
+        if (colorIndex != 0 && isPaintable) // Check if input is legal
         {
             if (colorIndex == 9) // Check if input color is brown
             {

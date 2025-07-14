@@ -356,7 +356,7 @@ GameObject:
   - component: {fileID: 659592687}
   m_Layer: 3
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -627,6 +627,7 @@ MonoBehaviour:
   targetAudio: {fileID: 0}
   shootSound: {fileID: 8300000, guid: cb4c3e006ae39e54bb6226facb78ca05, type: 3}
   siphonSound: {fileID: 8300000, guid: e8544b6929a86f641a0982ae093b6be8, type: 3}
+  siphonFail: {fileID: 0}
   ejectSound: {fileID: 8300000, guid: 4ab971a0bbbca7944848abd3d0bd4b4f, type: 3}
   ejecting: 0
   colorChangeSound: {fileID: 8300000, guid: 43b14a2cdb8edfe419636392171e3bcf, type: 3}
